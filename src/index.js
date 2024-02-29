@@ -85,6 +85,31 @@ class List {
     }
     return this.toString(position.next, string);
   }
+
+  insertAt(node, index, position = this) {
+    if (index === 1) {
+      const object = { ...position };
+      position.next = object;
+      position.next.value = node.value;
+      return undefined;
+    }
+    if (position.next === null) {
+      return 'Index to long';
+    }
+    return this.insertAt(node, index - 1, position.next);
+  }
+
+  removeAt(index, position = this) {
+    if (index === 1) {
+      const node = position.next;
+      position.next = null;
+      return node;
+    }
+    if (position.next === null) {
+      return 'Index to long';
+    }
+    return this.removeAt(index - 1, position.next);
+  }
 }
 
 class Node {
@@ -94,13 +119,15 @@ class Node {
   }
 }
 
-// const node = new Node(4);
-// const node2 = new Node(5);
-// const node3 = new Node(6);
-// const node4 = new Node(7);
+// const node = new Node(1);
+// const node2 = new Node(2);
+// const node3 = new Node(3);
+// const node4 = new Node(4);
 // const list = new List();
 // list.append(node);
 // list.append(node2);
 // list.append(node3);
-// list.prepend(node4);
-// console.log(list.toString());
+// list.append(node4);
+// list.insertAt(node4, 3);
+// console.log(list.removeAt(5))
+// console.log(list);
